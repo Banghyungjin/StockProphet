@@ -1,0 +1,35 @@
+{% extends "layouts/layouts_yellow.html" %}
+{% block body %}
+<div>
+    <h1 class="display-2" style="display: inline;">NOTES PAGE</h1>
+    <h1 class="display-4" style="display: inline;"> - SHOW</h1>
+</div>
+<p class="lead">This page is what you chose at notes page.</p>
+<hr class="my-4">
+<!--    <a class="btn btn-warning btn-lg" href="/" role="button">to HOME</a>
+<a class="btn btn-warning btn-lg" href="/articles" role="button">go BACK</a>    -->
+<p></p>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <form action="/change_articles/{{article[0]}}" method="POST">
+            <div class="form-group">
+                <label>  - TITLE -</label>
+                <input class="form-control" type="text" name='Title' value={{article[1]}} placeholder="input your title" disabled>
+            </div>
+            <div class="form-group">
+                <label>  - DESCRIPTION -</label>
+                <textarea class="form-control" rows="15" name="Desc" placeholder="input your description" disabled>{{article[2]}}</textarea>
+            </div>
+            <div class="form-group">
+                <label>  - AUTHOR -</label>
+                <input type="text" name='Author' value="{{article[3]}}" class="form-control" placeholder="input your name" disabled>
+                
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary btn-lg btn-block" href="/notes">BACK</a>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

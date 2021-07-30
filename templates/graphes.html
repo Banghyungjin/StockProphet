@@ -1,0 +1,53 @@
+{% extends "layouts/layouts_red.html" %}
+{% block body %}
+<h1 class="display-1">DRAW BY YOURSELF!</h1>
+<p class="lead">This is graph page</p>
+<hr class="my-4">
+
+<div>
+{#    <a class="btn btn-primary btn-lg" href="/" role="button">HOME</a>#}
+{#    <a class="btn btn-success btn-lg" href="/about" role="button">ABOUT ME</a>#}
+{#    <a class="btn btn-warning btn-lg" href="/articles" role="button">ARTICLES</a>#}
+{#    <a class="btn btn-success btn-lg" href="/webtoons" role="button">WEBTOONS</a>#}
+</div>
+
+<form action="/graphes/" method="POST">
+    <div class="form-group">
+        색깔 선택 =
+        <input type="color" name='color' style="width: 30%" value="{{ color }}">
+    </div>
+    <div class="form-group">
+        점 분산 선택 (0 ~ 500) =
+        <input type="range" name='number' max="500" min="0" style="width: 30%" value="{{ size }}"
+        oninput="document.getElementById('size_value').innerHTML=this.value;">
+        <span id="size_value" >{{ size }}</span>
+    </div>
+    <div class="form-group">
+        점 크기 선택 (50 ~ 300) =
+        <input type="range" name='var' max="300" min="50" style="width: 30%" value="{{ var }}"
+        oninput="document.getElementById('dot_size').innerHTML=this.value;">
+        <span id="dot_size" >{{ var }}</span>
+    </div>
+{#            <div class="form-group">#}
+{#                <label>  - DESCRIPTION -</label>#}
+{#                <textarea class="form-control" rows="15" name="Desc" placeholder="input your description" required></textarea>#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label>  - AUTHOR -</label>#}
+{#                <input type="text" name='Author' class="form-control" value = {{ user }} disabled>#}
+{#            </div>#}
+    <div class="form-group">
+        <input class="btn btn-danger btn-lg btn-block" type="submit" value="make" >
+    </div>
+{#            <div class="form-group">#}
+{#                <a class="btn btn-warning btn-lg btn-block" href="/notes"> CANCEL</a>#}
+{#            </div>#}
+</form>
+<div>
+    <img src="{{url_for('fig', mean = mean, var = var, size = size, color = color)}}" alt="Image Broken" style="width: 70%; height: 50%">
+</div>
+<p></p>
+
+
+
+{% endblock %}

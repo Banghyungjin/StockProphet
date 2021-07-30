@@ -1,0 +1,49 @@
+{%with messages = get_flashed_messages()%}
+    {%if messages %}
+        <script type="text/javascript">
+            alert("{{messages[-1]}}");
+        </script>
+    {%endif%}
+{%endwith%}
+
+{% extends "layouts/layouts_log_in.html" %}
+{% block body %}
+<div>
+    <h1 class="display-1" style="display: inline;">HOME PAGE</h1>
+    <h1 class="display-4" style="display: inline;"> - LOG IN</h1>
+</div>
+
+<p class="lead">This page is for Log-in.</p>
+<hr class="my-4">
+<!--    <a class="btn btn-warning btn-lg" href="/" role="button">to HOME</a>
+<a class="btn btn-warning btn-lg" href="/articles" role="button">go BACK</a>    -->
+<p></p>
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Please Log In.</h4>
+
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label>   - ID -</label>
+                <input class="form-control" type="text" autocomplete="off" name='Username' placeholder="Enter your ID" required>
+            </div>
+            <div class="form-group">
+                <label>   - PASSWORD -</label>
+                <input type="password" name='psword' class="form-control" placeholder="Enter your password" required>
+                
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="LOG IN" >
+            </div>
+            <div class="form-group">
+                <a class="btn btn-success btn-lg btn-block" href="/register"> REGISTER</a>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-outline-primary btn-lg btn-block" href="/guest"> GUEST LOGIN</a>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

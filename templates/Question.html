@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<!-- Fig. 2.12: table1.html -->
+<!-- Creating a basic table. -->
+<html>
+   <head>
+      <H1>웹응용프로그래밍 중간고사 3번</H1>
+      <script src = "..\static\Question.js"></script>
+      <style>
+         .left-box {
+           float: left;
+           width: 15%;
+           position :relative;
+         }
+         .right-profile-img {
+           float: left;
+           width: 50%;
+         }
+         .center-box {
+            float:right;
+            position :relative;
+         }
+         </style>
+   </head>
+
+   <body>
+      <div class = "left-box" id = 'menu'>
+         <ul><button onclick = "show('make')" > 새로운 문제 추가 </button></ul>
+         <ul><button onclick = "print_question()" > 저장된 문제 출력 </button></ul>
+      </div>
+      <div class="center-box"></div>
+      <div class="right-box" id = 'make' style="display:none;">
+         <form>
+            <p> -  문제 번호  <input type="text" id = "Qnumber" required></p>
+            <p> -  문제 내용</p> 
+            <textarea rows="4" cols="50" id = "Qtext" required></textarea>
+            <p> -  문제 설명</p> 
+            <textarea rows="1" cols="50" id = "Explanation" required></textarea>
+            <p> -  보기 1 <input id="select1" type="text" required /> </p>
+            
+            <p> -  보기 2 <input id="select2" type="text" required /> </p>
+            <p> -  보기 3 <input id="select3" type="text" required /> </p>
+            <p> -  보기 4 <input id="select4" type="text" required /> </p>
+            <p> -  보기 5 <input id="select5" type="text" required /> </p>
+            <p> -  정답  <input type="text" id = "Qanswer" required></p>
+            <p></p>
+            <button onclick = "pushQuestion()" id = "pushbutton" style="display: block;" >문제 입력 </button>
+            <button onclick = "pushAnswer()" id = "pushanswer" style="display: none;" > 정답 입력</button>
+         </form>
+      </div>
+      <div class="right-box" id = 'showQuestion' style="display:none;">
+            
+      </div>
+   </body>

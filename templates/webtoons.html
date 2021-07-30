@@ -1,0 +1,43 @@
+{% extends "layouts/layouts_green.html" %}
+{% block body %}
+<h1 class="display-1">WEBTOONS PAGE</h1>
+<p class="lead">This is today's ranking page of Naver webtoon. To see the webtoon, click the link.</p>
+<hr class="my-4">
+<div>
+{#    <a class="btn btn-primary btn-lg" href="/" role="button">HOME</a>#}
+{#    <a class="btn btn-success btn-lg" href="/about" role="button">ABOUT ME</a>#}
+{#    <a class="btn btn-warning btn-lg" href="/articles" role="button">ARTICLES</a>#}
+{#    <a class="btn btn-danger btn-lg" href="/graphes" role="button">GRAPHES</a>#}
+</div>
+
+<p></p>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>RANKING OF {{ today }}'S {{ webtoonsize }} WEBTOONS! </h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Ranking</th>
+                        <th>TITLE</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for webtoon in webtoons %}
+                    <tr>
+                        <th scope="row">{{ webtoon[0] }}</th>
+                        <td>{{ webtoon[1] }}</td>
+                        <td><a href="https://comic.naver.com{{webtoon[2]}}" target = _blank>보러가기</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

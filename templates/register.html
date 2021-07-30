@@ -1,0 +1,64 @@
+{% extends "layouts/layouts_register.html" %}
+{% block body %}
+
+<script>
+    function jbSubmit() {
+        var pw1 = document.getElementById( 'pw1' ).value;
+        var pw2 = document.getElementById( 'pw2' ).value;
+        if (confirm("가입하시겠습니까?")) {
+            if (pw1 != pw2) {
+                alert("Passwords are not same!")
+                return false;
+            }
+        } 
+    }
+</script>
+
+<div>
+    <h1 class="display-1" style="display: inline;">HOME PAGE</h1>
+    <h1 class="display-4" style="display: inline;"> - REGISTER</h1>
+</div>
+
+<p class="lead">This page is for register.</p>
+<hr class="my-4">
+<!--    <a class="btn btn-warning btn-lg" href="/" role="button">to HOME</a>
+<a class="btn btn-warning btn-lg" href="/articles" role="button">go BACK</a>    -->
+<p></p>
+
+<div class="card mb-5">
+    <div class="card-header">
+        <h4>Please Fill Contents Below To Register.</h4>
+
+        <form action="/register" method="POST" onsubmit="return jbSubmit();">
+            <div class="form-group">
+                <label>   - NAME -</label>
+                <input class="form-control" type="text" minlength="3" name='Name' placeholder="input your name" required>
+            </div>
+            <div class="form-group">
+                <label>   - E-Mail -</label>
+                <input class="form-control" type="email" name='Email' placeholder="input your e-mail" required>
+            </div>
+            <div class="form-group">
+                <label>   - ID -</label>
+                <input class="form-control" type="text" minlength="4" name='Username' placeholder="input your ID" required>
+            </div>
+            <div class="form-group">
+                <label>   - PASSWORD -</label>
+                <input type="password" name='psword' id = "pw1" class="form-control" placeholder="input your password" required>
+                
+            </div>
+            <div class="form-group">
+                <label>   - PASSWORD CONFIRM -</label>
+                <input type="password" name='ps_confirm' id = "pw2" class="form-control" placeholder="input your password again" required>
+                
+            </div>
+            <div class="form-group">
+                <input class="btn btn-success btn-lg btn-block" type="submit" value="REGISTER" >
+            </div>
+            <div class="form-group">
+                <a class="btn btn-warning btn-lg btn-block" href="/"> CANCEL</a>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layouts/layouts_yellow.html" %}
+{% block body %}
+<div>
+    <h1 class="display-1" style="display: inline;">NOTES PAGE</h1>
+    <h1 class="display-4" style="display: inline;"> - ADD</h1>
+</div>
+
+<p class="lead">This page is for adding new gibberish.</p>
+<hr class="my-4">
+<!--    <a class="btn btn-warning btn-lg" href="/" role="button">to HOME</a>
+<a class="btn btn-warning btn-lg" href="/articles" role="button">go BACK</a>    -->
+<p></p>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Please Fill Contents Below To Add New One.</h4>
+        <form action="/add_notes" method="POST" onsubmit="return confirm('이렇게 작성하시겠습니까?')">
+            <div class="form-group">
+                <label>  - TITLE -</label>
+                <input class="form-control" type="text" name='Title' placeholder="input your title" required>
+            </div>
+            <div class="form-group">
+                <label>  - DESCRIPTION -</label>
+                <textarea class="form-control" rows="15" name="Desc" placeholder="input your description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>  - AUTHOR -</label>
+                <input type="text" name='Author' class="form-control" value = {{ user }} disabled>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-success btn-lg btn-block" type="submit" value="ADD" >
+            </div>
+            <div class="form-group">
+                <a class="btn btn-warning btn-lg btn-block" href="/notes"> CANCEL</a>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

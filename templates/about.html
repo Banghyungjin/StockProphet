@@ -1,0 +1,85 @@
+{% extends "layouts/layouts_green.html" %}
+{% block body %}
+<h1 class="display-1">ABOUT ME</h1>
+<p class="lead">This is page about me.</p>
+<hr class="my-4">
+
+<div class = "card mb-1">
+    <div class = card-header>
+        <style>
+            .left-box {
+                float : left;
+                width : 70%;
+                height : fit-content;
+            }
+            .right-profile-img {
+                float : right;
+                height : 10%;
+                border-radius : 30%;
+                overflow : hidden;
+                object-fit : cover;
+            }
+            </style>
+
+        <div class="left-box">
+            <div id="demo" class="carousel slide" data-ride="carousel" style=" height: fit-content">
+
+            <!-- Indicators -->
+        {#        <ul class="carousel-indicators">#}
+        {#            <li data-target="#demo" data-slide-to="0" class="active"></li>#}
+        {#            <li data-target="#demo" data-slide-to="1"></li>#}
+        {#        </ul>#}
+
+              <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="position: center">
+                        <div class = "card-body">
+                            <p class = "display-4">Hello!</p>
+                            <p class = "display-4">I'm HyungJin Bang</p>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item">
+                        <div class = "card-body">
+                            <p class = "display-4">I live in Busan</p>
+                            <p class = "display-4">Republic of Korea</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class = "card-body">
+                            <p class = "display-4">I use 3 programming langs</p>
+                            <p class = "display-4">C++ JAVA Python</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class = "card-body">
+                            <p class = "display-4">If you want to see my stuff,</p>
+                            <p class = "display-4">Click my photo right next!</p>
+                        </div>
+                    </div>
+                </div>
+
+          <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+{#                <span class="carousel-control-prev-icon"></span>#}
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+{#                <span class="carousel-control-next-icon"></span>#}
+                </a>
+
+            </div>
+            <div>
+                <a>Still working on it!</a>
+            </div>
+
+        </div>
+        <div class="right-profile-img" >
+            <a href="https://github.com/Banghyungjin" target = _blank>
+                <img src="https://avatars.githubusercontent.com/u/37135305?v=4" width="300">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

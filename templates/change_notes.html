@@ -1,0 +1,38 @@
+{% extends "layouts/layouts_yellow.html" %}
+{% block body %}
+<div>
+    <h1 class="display-1" style="display: inline;">NOTES PAGE</h1>
+    <h1 class="display-4" style="display: inline;"> - EDIT</h1>
+</div>
+<p class="lead">This page is for changing an gibberish.</p>
+<hr class="my-4">
+<!--    <a class="btn btn-warning btn-lg" href="/" role="button">to HOME</a>
+<a class="btn btn-warning btn-lg" href="/articles" role="button">go BACK</a>    -->
+<p></p>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Please Change Contents Below.</h4>
+        <form action="/change_notes/{{article[0]}}" method="POST" onsubmit="return confirm('이렇게 수정하시겠습니까?')">
+            <div class="form-group">
+                <label>  - TITLE -</label>
+                <input class="form-control" type="text" name='Title' value={{article[1]}} placeholder="input your title" required>
+            </div>
+            <div class="form-group">
+                <label>  - DESCRIPTION -</label>
+                <textarea class="form-control" rows="15" name="Desc" placeholder="input your description" required>{{article[2]}}</textarea>
+            </div>
+            <div class="form-group">
+                <label>  - AUTHOR -</label>
+                <input type="text" name='Author' value="{{article[3]}}" class="form-control" placeholder="input your name" required>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-success btn-lg btn-block" type="submit" value="CHANGE" >
+            </div>
+            <div class="form-group">
+                <a class="btn btn-warning btn-lg btn-block" href="/notes"> CANCEL</a>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

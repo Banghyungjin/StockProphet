@@ -1,0 +1,64 @@
+{% extends "layouts/layouts_menu.html" %}
+{% block body %}
+<h1 class="display-1">NOTES PAGE</h1>
+<p class="lead">This is note page where I jot down some gibberish. To see the detailed description, click the title.</p>
+<hr class="my-4">
+<div>
+{#    <a class="btn btn-primary btn-lg" href="/" role="button">HOME</a>#}
+{#    <a class="btn btn-success btn-lg" href="/about" role="button">ABOUT ME</a>#}
+{#    <a class="btn btn-success btn-lg" href="/webtoons" role="button">WEBTOONS</a>#}
+{#    <a class="btn btn-danger btn-lg" href="/graphes" role="button">GRAPHES</a>#}
+</div>
+
+<p></p>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>FOR NOW, WE HAVE {{ notesize }} GIBBERISH</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>TITLE</th>
+                        <th>DESCRIPTION</th>
+                        <th>AUTHOR</th>
+                        <th>TIME</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for note in notes %}
+                    
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td><a href="/note/{{note[0]}}">{{ note[1] }}</a></td>
+                        <td>
+                            {% if note[2]|length > 50 %}
+                            <a>{{ note[2][0:50] }}...</a>
+                            {% else %}
+                            <a>{{ note[2] }}</a>
+                            {% endif %}
+                        </td>
+                        <td><a>{{ note[3] }}</a></td>
+                        <td><a>{{ note[4] }}</a></td>
+                        <td><form action="/change_notes/{{note[0]}}" method="GET">
+                            <input type="submit" class="btn btn-warning" value = "Edit"></button>
+                        </form></td>
+                        <td><form action="/delete/{{note[0]}}" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                            <input type="submit" class="btn btn-danger" value = "Del"></button>
+                        </form></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p></p>
+        <div><a class="btn btn-success btn-lg btn-block" href="/add_notes" role="button">ADD</a></div>
+    </div>
+</div>
+    
+{% endblock %}
