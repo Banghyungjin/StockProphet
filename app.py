@@ -185,8 +185,9 @@ def stocks(area, page_num):
         if area != 'all':
             sql += f" WHERE 업종 = '{area}'"
         cursor.execute(sql)
-        stocks = cursor.fetchall()
-        return render_template("stocks.html", stocks=stocks, stocksize=len(stocks))
+        stock = cursor.fetchall()
+        return render_template("stocks.html", stocks=stock[page_num * 20: (page_num + 1) * 20],
+                               stocksize=len(stock), page_num=page_num)
 
     else:
         return render_template("log_in.html")

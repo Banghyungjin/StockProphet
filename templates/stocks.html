@@ -14,7 +14,7 @@
 
 <div class="card mb-4">
     <div class="card-header">
-        <h3>KOSPI stocks </h3>
+        <h3>There are {{ stocksize }} stocks total</h3>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -22,37 +22,53 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Area</th>
                         <th>Name</th>
                         <th>Stock No.</th>
+                        <th>Area</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for stock in range(stocks|length) %}
                         <tr>
                             <th scope="row">{{ stock + 1 }}</th>
-                            <td>{{ stocks[stock][0] }}</td>
                             <td><a href="{{ stocks[stock][3] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
                             <td>{{ stocks[stock][2] }}</td>
+                            <td>{{ stocks[stock][0] }}</td>
     {#                        <td><a href="https://comic.naver.com{{webtoon[2]}}" target = _blank>보러가기</a></td>#}
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+    <h4>Page {{ page_num + 1 }} of {{ stocksize // 20 + 1 }}</h4>
         <div><a class="btn btn-success btn-lg btn-block" href="/stocks/refresh" role="button">REFRESH</a></div>
     </div>
     <div class="card-footer">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            {% for index in range((stocks|length) // 20) %}
-                <li class="page-item"><a class="page-link" href="#">{{ index }}</a></li>
+            <li class="active"><a class="page-link" href="/stocks/all/0">First</a></li>
+            {% if page_num > 0 %}
+                <li class="active"><a class="page-link" href="/stocks/all/{{ page_num - 1 }}">Previous</a></li>
+            {% else %}
+                <li class="disabled"><a class="page-link" href="#">Previous</a></li>
+            {% endif %}
+            {% for index in range(page_num - 4, page_num) %}
+                {% if index >= 0 %}
+                    <li class="active"><a class="page-link" href="/stocks/all/{{ index }}">{{ index + 1 }}</a></li>
+                {% endif %}
             {% endfor %}
-            {% for index in range((stocks|length) // 20) %}
-                <li class="page-item"><a class="page-link" href="#">{{ index }}</a></li>
+                <li class="disabled"><a class="page-link" href="#">{{ page_num + 1 }}</a></li>
+            {% for index in range(page_num + 1, page_num + 5) %}
+                {% if index <= stocksize // 20 %}
+                    <li class="active"><a class="page-link" href="/stocks/all/{{ index }}">{{ index + 1 }}</a></li>
+                {% endif %}
             {% endfor %}
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
+            {% if page_num < stocksize // 20 %}
+                <li class="active"><a class="page-link" href="/stocks/all/{{ page_num + 1 }}">Next</a></li>
+            {% else %}
+                <li class="disabled"><a class="page-link" href="#">Next</a></li>
+            {% endif %}
+            <li class="active"><a class="page-link" href="/stocks/all/{{ stocksize // 20 }}">Last</a></li>
+        </ul>
     </div>
 </div>
     
