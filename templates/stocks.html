@@ -28,19 +28,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                  {% for stock in range(stocks|length) %}
-                    <tr>
-                        <th scope="row">{{ stock + 1 }}</th>
-                        <td>{{ stocks[stock][0] }}</td>
-                        <td><a href="{{ stocks[stock][3] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
-                        <td>{{ stocks[stock][2] }}</td>
-{#                        <td><a href="https://comic.naver.com{{webtoon[2]}}" target = _blank>보러가기</a></td>#}
-                    </tr>
-                {% endfor %}
+                    {% for stock in range(stocks|length) %}
+                        <tr>
+                            <th scope="row">{{ stock + 1 }}</th>
+                            <td>{{ stocks[stock][0] }}</td>
+                            <td><a href="{{ stocks[stock][3] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
+                            <td>{{ stocks[stock][2] }}</td>
+    {#                        <td><a href="https://comic.naver.com{{webtoon[2]}}" target = _blank>보러가기</a></td>#}
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
         <div><a class="btn btn-success btn-lg btn-block" href="/stocks/refresh" role="button">REFRESH</a></div>
+    </div>
+    <div class="card-footer">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            {% for index in range((stocks|length) // 20) %}
+                <li class="page-item"><a class="page-link" href="#">{{ index }}</a></li>
+            {% endfor %}
+            {% for index in range((stocks|length) // 20) %}
+                <li class="page-item"><a class="page-link" href="#">{{ index }}</a></li>
+            {% endfor %}
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
     </div>
 </div>
     

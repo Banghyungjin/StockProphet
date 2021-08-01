@@ -116,23 +116,11 @@ def webtoons():
 @app.route('/stocks/refresh', methods=["GET", "POST"])
 def stocks_refresh():
     cursor = db.cursor()
-    # if request.method == "POST":
     input_df = all_upjong_list()
-    # print(type(input_df))
-    # cursor.execute("truncate flasktest.stock")
-    # db.commit()
     db_connection_str = 'mysql+pymysql://root:1234@localhost/flasktest'
     db_connection = create_engine(db_connection_str)
-    # conn = db_connection.connect()
     input_df.to_sql(name='stock', con=db_connection, if_exists='replace', index=False)
-    # sql_insert = "INSERT INTO `flasktest`.`stock` (`name`, `upjong`, `upjong_no`) VALUES (%s, %s, %s);"
-    # val = [title, desc, author]
-    # cursor.execute(sql_insert, val)
-    # db.commit()
-    # db.close()
     return redirect("/stocks")
-    # else:
-    #     return render_template("add_notes.html", user=session.get('is_logged'))
 
 
 def one_upjong_list(page, upjong):
@@ -189,16 +177,16 @@ def all_upjong_list():
 
 
 # 주식 db 목록 읽어오는 기능
-@app.route('/stocks', methods=["GET", "POST"])
-def stocks():
+@app.route('/stocks/<string:area>/<int:page_num>', methods=["GET", "POST"])
+def stocks(area, page_num):
     if session.get('is_logged') is not None:
         cursor = db.cursor()
         sql = 'SELECT * FROM stock'
+        if area != 'all':
+            sql += f" WHERE 업종 = '{area}'"
         cursor.execute(sql)
-        topics = cursor.fetchall()
-        # articles = Articles()
-        # print(articles[0]['title'])
-        return render_template("stocks.html", stocks=topics, stocksize=len(topics))
+        stocks = cursor.fetchall()
+        return render_template("stocks.html", stocks=stocks, stocksize=len(stocks))
 
     else:
         return render_template("log_in.html")
