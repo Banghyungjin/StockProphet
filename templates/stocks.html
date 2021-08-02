@@ -14,10 +14,12 @@
 
 <div class="card mb-4">
     <div class="card-header" style="float: left">
-        <div style="float: left">
+        <div>
             <h3>
                 {% if area == 'all' %}
                     There are {{ stocksize }} stocks total
+                {% elif area == 'search' %}
+                    There are {{ stocksize }} stocks match '{{ search }}'
                 {% else %}
                     There are {{ stocksize }} stocks in {{ area }}
                 {% endif %}
@@ -37,6 +39,26 @@
 
               </div>
         </div>
+        <a class="btn btn-warning btn-md btn-block"
+                    href="/stocks/all/0" role="button" style="width: 10%; float: right">
+                    Reset
+        </a>
+        <form action="/stocks/search/0" method="POST">
+            <div class="form-group" style="float: right; width: 10%">
+                <input class="btn btn-primary btn-md btn-block" style="float: left" type="submit" value="Search" >
+            </div>
+            <div class="form-group" style="float: right; width: 40%">
+                <input class="form-control" style="float: left" type="text" autocomplete="off" name='search' placeholder="Search" required>
+            </div>
+
+{#            <div class="form-group">#}
+{#                <a class="btn btn-success btn-lg btn-block" href="/register"> REGISTER</a>#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <a class="btn btn-outline-primary btn-lg btn-block" href="/guest"> GUEST LOGIN</a>#}
+{#            </div>#}
+        </form>
+
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -92,9 +114,9 @@
             <li class="active"><a class="page-link" href="/stocks/all/{{ stocksize // 20 }}">Last</a></li>
         </ul>
         <div>
-            <a class="btn btn-danger btn-lg btn-block" onclick="return confirm('새로고침에는 시간이 많이 걸려요!')"
+            <a class="btn btn-danger btn-md btn-block" onclick="return confirm('새로고침에는 시간이 많이 걸려요!')"
                 href="/stocks/refresh" role="button" style="width: 20%; float: right">
-                REFRESH
+                Refresh Database
             </a>
         </div>
     </div>

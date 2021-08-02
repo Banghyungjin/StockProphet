@@ -176,19 +176,24 @@ def all_upjong_list():
 # 주식 db 목록 읽어오는 기능
 @app.route('/stocks/<string:area>/<int:page_num>', methods=["GET", "POST"])
 def stocks(area, page_num):
+    input_name = ""
     if session.get('is_logged') is not None:
         cursor = db.cursor()
-        sql = 'SELECT * FROM flasktest.stock'
-        if area != 'all':
-            sql += f" WHERE 업종 = '{area}'"
-        sql += ' ORDER BY 종목번호'
+        if request.method == "POST":
+            input_name = request.form['search']
+            sql = f"SELECT * FROM flasktest.stock WHERE 종목명 LIKE '%{input_name}%' ORDER BY 종목번호"
+        else:
+            sql = 'SELECT * FROM flasktest.stock'
+            if area != 'all':
+                sql += f" WHERE 업종 = '{area}'"
+            sql += ' ORDER BY 종목번호'
         cursor.execute(sql)
         stock = cursor.fetchall()
         sql = 'SELECT distinct 업종 FROM flasktest.stock'
         cursor.execute(sql)
         areas = cursor.fetchall()
         return render_template("stocks.html", stocks=stock[page_num * 20: (page_num + 1) * 20],
-                               stocksize=len(stock), page_num=page_num, areas=areas, area = area)
+                               stocksize=len(stock), page_num=page_num, areas=areas, area=area, search=input_name)
 
     else:
         return render_template("log_in.html")
