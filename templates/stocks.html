@@ -13,26 +13,48 @@
 <p></p>
 
 <div class="card mb-4">
-    <div class="card-header">
-        <h3>There are {{ stocksize }} stocks total</h3>
+    <div class="card-header" style="float: left">
+        <div style="float: left">
+            <h3>
+                {% if area == 'all' %}
+                    There are {{ stocksize }} stocks total
+                {% else %}
+                    There are {{ stocksize }} stocks in {{ area }}
+                {% endif %}
+            </h3>
+        </div>
+        <div class="btn-group" style="float: right; width: 10%">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Areas
+            </button>
+                <div class="dropdown-menu" style="max-height: 280px; overflow-y: auto">
+                    <a class="dropdown-item" href="/stocks/all/0">All</a>
+                    <div class="dropdown-divider"></div>
+                    {% for area in areas %}
+                        <a class="dropdown-item" href="/stocks/{{ area[0] }}/0">{{ area[0] }}</a>
+                    {% endfor %}
+
+              </div>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Stock No.</th>
-                        <th>Area</th>
+                        <th style="width: 10%">No.</th>
+                        <th style="width: 15%">Stock No.</th>
+                        <th style="width: 50%">Name</th>
+                        <th style="width: 25%">Area</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for stock in range(stocks|length) %}
                         <tr>
                             <th scope="row">{{ stock + 1 }}</th>
-                            <td><a href="{{ stocks[stock][3] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
                             <td>{{ stocks[stock][2] }}</td>
+                            <td><a href="{{ stocks[stock][3] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
                             <td>{{ stocks[stock][0] }}</td>
     {#                        <td><a href="https://comic.naver.com{{webtoon[2]}}" target = _blank>보러가기</a></td>#}
                         </tr>
@@ -41,10 +63,10 @@
             </table>
         </div>
     <h4>Page {{ page_num + 1 }} of {{ stocksize // 20 + 1 }}</h4>
-        <div><a class="btn btn-success btn-lg btn-block" href="/stocks/refresh" role="button">REFRESH</a></div>
+
     </div>
     <div class="card-footer">
-        <ul class="pagination">
+        <ul class="pagination" style="float: left">
             <li class="active"><a class="page-link" href="/stocks/all/0">First</a></li>
             {% if page_num > 0 %}
                 <li class="active"><a class="page-link" href="/stocks/all/{{ page_num - 1 }}">Previous</a></li>
@@ -69,6 +91,12 @@
             {% endif %}
             <li class="active"><a class="page-link" href="/stocks/all/{{ stocksize // 20 }}">Last</a></li>
         </ul>
+        <div>
+            <a class="btn btn-danger btn-lg btn-block" onclick="return confirm('새로고침에는 시간이 많이 걸려요!')"
+                href="/stocks/refresh" role="button" style="width: 20%; float: right">
+                REFRESH
+            </a>
+        </div>
     </div>
 </div>
     

@@ -125,7 +125,6 @@ def stocks_refresh():
 
 def one_upjong_list(page, upjong):
     STOCKLIST_URL = page  # 주소설정
-    response = urllib.request.urlopen(STOCKLIST_URL)
     soup = BeautifulSoup(requests.get(STOCKLIST_URL).content.decode('euc-kr', 'replace'), 'html.parser')
     STOCK_NAME_LIST = []
     STOCK_NUMBER_LIST = []
@@ -140,7 +139,6 @@ def one_upjong_list(page, upjong):
             STOCK_URL_LIST.append("https://finance.naver.com/" + stockName[0].get('href'))
             stockName = stockName[0].get_text()
             STOCK_NAME_LIST.append(stockName)
-            # print(type(stockName))
     STOCK_LIST = []
     for i in range(len(STOCK_NAME_LIST)):
         stockInfo = [upjong, STOCK_NAME_LIST[i], STOCK_NUMBER_LIST[i], STOCK_URL_LIST[i]]
@@ -151,7 +149,6 @@ def one_upjong_list(page, upjong):
 
 def all_upjong_list():
     UPJONG_URL = 'https://finance.naver.com/sise/sise_group.nhn?type=upjong'  # 주소설정
-    response = urllib.request.urlopen(UPJONG_URL)
     soup = BeautifulSoup(requests.get(UPJONG_URL).content.decode('euc-kr', 'replace'), 'html.parser')
     UPJONG_NAME_LIST = []
     UPJONG_URL_LIST = []
@@ -181,13 +178,17 @@ def all_upjong_list():
 def stocks(area, page_num):
     if session.get('is_logged') is not None:
         cursor = db.cursor()
-        sql = 'SELECT * FROM stock'
+        sql = 'SELECT * FROM flasktest.stock'
         if area != 'all':
             sql += f" WHERE 업종 = '{area}'"
+        sql += ' ORDER BY 종목번호'
         cursor.execute(sql)
         stock = cursor.fetchall()
+        sql = 'SELECT distinct 업종 FROM flasktest.stock'
+        cursor.execute(sql)
+        areas = cursor.fetchall()
         return render_template("stocks.html", stocks=stock[page_num * 20: (page_num + 1) * 20],
-                               stocksize=len(stock), page_num=page_num)
+                               stocksize=len(stock), page_num=page_num, areas=areas, area = area)
 
     else:
         return render_template("log_in.html")
