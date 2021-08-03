@@ -76,7 +76,7 @@
                         <tr>
                             <th scope="row">{{ stock + 1 }}</th>
                             <td>{{ stocks[stock][2] }}</td>
-                            <td><a href="{{ stocks[stock][3] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
+                            <td><a href="/stock_graph/{{ stocks[stock][2] }}" target = _blank>{{ stocks[stock][1] }}</a></td>
                             <td>{{ stocks[stock][0] }}</td>
     {#                        <td><a href="https://comic.naver.com{{webtoon[2]}}" target = _blank>보러가기</a></td>#}
                         </tr>
@@ -117,6 +117,12 @@
             <a class="btn btn-danger btn-md btn-block" onclick="return confirm('새로고침에는 시간이 많이 걸려요!')"
                 href="/stocks/refresh" role="button" style="width: 20%; float: right">
                 Refresh Database
+            </a>
+        </div>
+        <div>
+            <a class="btn btn-warning btn-md btn-block" onclick="return confirm('새로고침에는 시간이 많이 걸려요!')"
+                href="/stocks/refresh_price" role="button" style="width: 20%; float: right">
+                Refresh Prices
             </a>
         </div>
     </div>

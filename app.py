@@ -11,9 +11,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import requests
 import pandas as pd
+import glob
+import json
 from pandas.io import sql
 from sqlalchemy import create_engine
+import FinanceDataReader as fdr
+import mplfinance as mpf
 import tqdm
+from urllib import request as req
 
 app = Flask(__name__)
 
@@ -173,6 +178,26 @@ def all_upjong_list():
     return pd.concat(FINAL_LIST, ignore_index=True)
 
 
+# 주식 가격 새로고치는 기능
+@app.route('/stocks/refresh_price', methods=["GET", "POST"])
+def refresh_price():
+    cursor = db.cursor()
+    sql = f"SELECT * FROM flasktest.stock "
+    cursor.execute(sql)
+    stocks = cursor.fetchall()
+    for stock in range(len(stocks)):
+        print(f'saving {stock} of {len(stocks)} : {stocks[stock][1]}')
+        df = fdr.DataReader(f'{stocks[stock][2]}')
+        df.to_csv(f'assets/csv/{stocks[stock][2]}.csv')
+    cursor.execute(sql)
+    stock = cursor.fetchall()
+    sql = 'SELECT distinct 업종 FROM flasktest.stock'
+    cursor.execute(sql)
+    areas = cursor.fetchall()
+    return render_template("stocks.html", stocks=stock[0: 20],
+                           stocksize=len(stock), page_num=0, areas=areas, area='all', search='')
+
+
 # 주식 db 목록 읽어오는 기능
 @app.route('/stocks/<string:area>/<int:page_num>', methods=["GET", "POST"])
 def stocks(area, page_num):
@@ -197,6 +222,12 @@ def stocks(area, page_num):
 
     else:
         return render_template("log_in.html")
+
+
+# 주식 상세보기 기능
+@app.route('/stock_graph/<string:input_stock>', methods=["GET", "POST"])
+def show_stock_graph(input_stock):
+    return render_template('stock_graph.html')
 
 
 # db 목록 읽어오는 기능
