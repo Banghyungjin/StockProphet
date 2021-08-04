@@ -1,29 +1,65 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script type="text/javascript" src="C:/Users/Bangh/Documents/GitHub/StockProphet/js/stockcharts.js"></script>
+
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+
 {% extends "layouts/layouts_green.html" %}
 {% block body %}
+
 <h1 class="display-1">STOCK GRAPH PAGE</h1>
 <p class="lead">This is page where you can see the graph of stock you chose.</p>
+<p class="lead">Click & drag to zoom, drag while pressing shift key to pan.</p>
 <hr class="my-4">
-<div>
-{#    <a class="btn btn-primary btn-lg" href="/" role="button">HOME</a>#}
-{#    <a class="btn btn-success btn-lg" href="/about" role="button">ABOUT ME</a>#}
-{#    <a class="btn btn-warning btn-lg" href="/articles" role="button">ARTICLES</a>#}
-{#    <a class="btn btn-danger btn-lg" href="/graphes" role="button">GRAPHES</a>#}
-</div>
 
 <p></p>
 <figure class="highcharts-figure">
-    <div id="container"></div>
+    <div id="stockgraph"></div>
+    <script>
+        Highcharts.chart('stockgraph', {
+
+            chart: {
+                        zoomType:'x',
+                        panning: true,
+                        panKey: 'shift'
+                    },
+                    title: {
+                        text: "{{ input_stock[0][1] }}"
+                    },
+
+                    subtitle: {
+                        text: '{{ input_stock[0][2] }}'
+                    },
+
+                    yAxis: {
+
+                    },
+
+                    xAxis: {
+
+                    },
+
+                    /* 범례를 우측 세로로 정렬 */
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+                    series: [{
+                        data: {{ stock_price }}
+                    }]
+        });
+    </script>
+
+
     <p class="highcharts-description">
         Basic line chart showing trends in a dataset. This chart includes the
         <code>series-label</code> module, which adds a label to each line for
         enhanced readability.
     </p>
 </figure>
-    
+
 {% endblock %}

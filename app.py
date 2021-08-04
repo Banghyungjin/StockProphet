@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import time
 import urllib
-from flask import Flask, render_template, request, redirect, flash, session, send_file
+from flask import Flask, render_template, request, redirect, flash, session, send_file, url_for
 from passlib.hash import sha256_crypt
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -227,7 +227,15 @@ def stocks(area, page_num):
 # 주식 상세보기 기능
 @app.route('/stock_graph/<string:input_stock>', methods=["GET", "POST"])
 def show_stock_graph(input_stock):
-    return render_template('stock_graph.html')
+    cursor = db.cursor()
+    sql = f"SELECT * FROM flasktest.stock WHERE 종목번호 = {input_stock}"
+    cursor.execute(sql)
+    stock = cursor.fetchall()
+    stock_df = fdr.DataReader(input_stock)
+    close_df = stock_df['Close'].to_list()
+
+    return render_template('stock_graph.html', input_stock=stock,
+                           stock_price=close_df)
 
 
 # db 목록 읽어오는 기능
@@ -314,13 +322,13 @@ def change_articles(id):
     return render_template("change_notes.html", article=topic)
 
 
-# 주식화면 - 아직 만드는 중
-@app.route('/stocks')
-def about():
-    if session.get('is_logged') is not None:
-        return render_template("stocks.html")
-    else:
-        return render_template("log_in.html")
+# # 주식화면 - 아직 만드는 중
+# @app.route('/stocks')
+# def about():
+#     if session.get('is_logged') is not None:
+#         return render_template("stocks.html")
+#     else:
+#         return render_template("log_in.html")
 
 
 @app.route('/fig/<float:mean>_<float:var>_<int:size>_<string:color>')
