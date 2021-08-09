@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import time
 import urllib
 from flask import Flask, render_template, request, redirect, flash, session, send_file, url_for
@@ -233,9 +232,13 @@ def show_stock_graph(input_stock):
     stock = cursor.fetchall()
     stock_df = fdr.DataReader(input_stock)
     close_df = stock_df['Close'].to_list()
-
+    time_df = stock_df.index.strftime('%Y-%m-%d').to_list()
+    input_time_df = []
+    volume_df = stock_df['Volume'].to_list()
+    for i in range(len(close_df)):
+        input_time_df.append(int(time_df[i][:4] + time_df[i][5:7] + time_df[i][8:]))
     return render_template('stock_graph.html', input_stock=stock,
-                           stock_price=close_df)
+                           stock_price=close_df, stock_time=time_df, stock_volume=volume_df, first=input_time_df)
 
 
 # db 목록 읽어오는 기능
