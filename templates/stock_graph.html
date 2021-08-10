@@ -18,6 +18,13 @@
 <figure class="highcharts-figure">
     <div id="stockgraph"></div>
     <script>
+        var timeArray = [];
+        var i = 0;
+        var max_length = {{ stock_price }}.length
+        for (i; i < max_length; i += 1) {
+            timeArray.push(Date.UTC({{ year }}[i], {{ month }}[i] - 1, {{ date }}[i]))
+        }
+
         Highcharts.chart('stockgraph', {
 
             chart: {
@@ -38,11 +45,10 @@
 
                     yAxis: [{
                         labels: {
-                            align: 'right',
-                            x: -3
+                            align: 'right'
                         },
                         title: {
-                            text: 'OHLC'
+                            text: 'Closing Price'
                         },
                         height: '60%',
                         lineWidth: 2,
@@ -51,8 +57,7 @@
                         }
                     }, {
                         labels: {
-                            align: 'right',
-                            x: -3
+                            align: 'right'
                         },
                         title: {
                             text: 'Volume'
@@ -68,7 +73,8 @@
                     },
 
                     xAxis: {
-                        categories: {{ first }}
+                        type:'datetime',
+                        categories: timeArray
                     },
 
                     /* 범례를 우측 세로로 정렬 */

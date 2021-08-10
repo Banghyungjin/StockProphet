@@ -237,8 +237,16 @@ def show_stock_graph(input_stock):
     volume_df = stock_df['Volume'].to_list()
     for i in range(len(close_df)):
         input_time_df.append(int(time_df[i][:4] + time_df[i][5:7] + time_df[i][8:]))
+    input_year = []
+    input_month = []
+    input_date = []
+    for i in range(len(close_df)):
+        input_year.append(int(time_df[i][:4]))
+        input_month.append(int(time_df[i][5:7]))
+        input_date.append(int(time_df[i][8:]))
     return render_template('stock_graph.html', input_stock=stock,
-                           stock_price=close_df, stock_time=time_df, stock_volume=volume_df, first=input_time_df)
+                           stock_price=close_df, stock_time=time_df, stock_volume=volume_df, first=input_time_df,
+                           year=input_year, month=input_month, date=input_date)
 
 
 # db 목록 읽어오는 기능
