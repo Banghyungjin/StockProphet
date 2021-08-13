@@ -22,7 +22,7 @@
         var i = 0;
         var max_length = {{ stock_price }}.length
         for (i; i < max_length; i += 1) {
-            timeArray.push(Date.UTC({{ year }}[i], {{ month }}[i] - 1, {{ date }}[i]))
+            timeArray.push(new Date({{ year }}[i], {{ month }}[i] - 1, {{ date }}[i]))
         }
 
         Highcharts.chart('stockgraph', {
@@ -73,8 +73,8 @@
                     },
 
                     xAxis: {
-                        type:'datetime',
-                        categories: timeArray
+
+                        {#categories: timeArray#}
                     },
 
                     /* 범례를 우측 세로로 정렬 */
@@ -86,7 +86,9 @@
 
                     series: [{
                         name: 'Closing Price',
-                        data: {{ stock_price }},
+                        data: {{ stock_price }}},{
+                        name: 'Predicted Price',
+                        data: {{ test }}
 
                     }, {
                         type: 'column',

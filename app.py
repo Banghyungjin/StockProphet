@@ -3,7 +3,7 @@ import urllib
 from flask import Flask, render_template, request, redirect, flash, session, send_file, url_for
 from passlib.hash import sha256_crypt
 from bs4 import BeautifulSoup
-from datetime import datetime
+import datetime
 from io import BytesIO, StringIO  # 그래프를 이미지로 저장하기위한 변환 라이브러리
 import pymysql
 import matplotlib.pyplot as plt
@@ -18,6 +18,9 @@ import FinanceDataReader as fdr
 import mplfinance as mpf
 import tqdm
 from urllib import request as req
+from statsmodels.tsa.arima_model import ARIMA
+import statsmodels.api as sm
+from pmdarima.arima import auto_arima
 
 app = Flask(__name__)
 
@@ -231,6 +234,13 @@ def show_stock_graph(input_stock):
     cursor.execute(sql)
     stock = cursor.fetchall()
     stock_df = fdr.DataReader(input_stock)
+    close_model_arima = auto_arima(stock_df[['Close']], trace=True, error_action='ignore', start_p=1, start_q=1, max_p=3,
+                                   max_q=3, suppress_warnings=True, stepwise=False, seasonal=False)
+    close_model_arima.fit(stock_df[['Close']])
+    close_model = ARIMA(stock_df[['Close']], order=close_model_arima.order)
+    close_model_fit = close_model.fit(disp=0)
+    fc, se, conf = close_model_fit.forecast(30, alpha=0.05)  # 95% conf
+    print(fc)
     close_df = stock_df['Close'].to_list()
     time_df = stock_df.index.strftime('%Y-%m-%d').to_list()
     input_time_df = []
@@ -245,8 +255,8 @@ def show_stock_graph(input_stock):
         input_month.append(int(time_df[i][5:7]))
         input_date.append(int(time_df[i][8:]))
     return render_template('stock_graph.html', input_stock=stock,
-                           stock_price=close_df, stock_time=time_df, stock_volume=volume_df, first=input_time_df,
-                           year=input_year, month=input_month, date=input_date)
+                           stock_price=close_df[-1000:], stock_time=time_df, stock_volume=volume_df[-1000:], first=input_time_df,
+                           year=input_year, month=input_month, date=input_date, test=fc.tolist())
 
 
 # db 목록 읽어오는 기능
